@@ -17,14 +17,11 @@
     I use the FASTQC for the implementation of QC about the raw data.
     you can search the FASTQC to get more information.
 ```shell
-    i=1
-    for id in *gz
-    do 
-    echo `date` "start do QC for " $id
-    /home/jmzeng/bio-soft/FastQC/fastqc $id
-    echo `date` "end do QC for " $id
-    i=$((i+1))
-    done 
+#/zzh_gpfs02/jixing/DataBase/bingli_dingyanqing/Exome/first
+for id in `find  /zzh_gpfs02/jixing/DataBase/bingli_dingyanqing/Exome/first -name "*.fq.gz"`;
+do
+bsub -n 4 -q cpu -e err_%J -o out_%J "/zzh_gpfs/apps/FastQC/fastqc $id -o /zzh_gpfs02/jixing/NTL/20161104_Exome/fastQC/" ;
+done;
 ```
 ## aligment
     you still need to adjust some parameters in below scripts,such as how many thread do you want to use, or the momery ?
