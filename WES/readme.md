@@ -27,20 +27,17 @@ done;
     you still need to adjust some parameters in below scripts,such as how many thread do you want to use, or the momery ?
 ###1. Align the paired reads to reference genome using bwa mem.
 ```shell
-    work_dir=/home/jmzeng/snp-calling
-    reference=/home/jmzeng/ref-database/hg19.fasta   
-    bwa_dir=$work_dir/resources/apps/bwa-0.7.11
-    picard_dir=$work_dir/resources/apps/picard-tools-1.119
-    while read id
-    do
-    sample=`echo $id |awk '{print $1}'`
-    read1=`echo $id |awk '{print $2}'`
-    read2=`echo $id |awk '{print $3}'`
-    echo $sample 
-    echo $read1 
-    echo $read2  
-    nohup $bwa_dir/bwa mem -t 10 -M $reference $read1 $read2 1> $sample.sam 2>>bwa.log &
-    done <$1
+   work_dir=/zzh_gpfs02/jixing/NTL/20161104_Exome/snp-calling
+   REFERENCE=/zzh_gpfs02/jixing/Annotation/hg19/genome.fa
+   BWA=/zzh_gpfs/apps/Bwa/bwa
+   DATA=/zzh_gpfs02/jixing/DataBase/bingli_dingyanqing/Exome
+   
+   for SAMPLE_ID in  193-LB 193-NB 193-TB 1-LB 1-NB 1-TB 215-LB 215-NB 215-TB 40A-LB 40A-NB 40A-TB 4-LB 4-NB 4-TB 5-LB 5-NB 5-TB
+   do
+   bsub -n 8 -q cpu -e err.bwa_%J -o out.bwa_%J \
+   "$BWA mem -M -t 8 $REFERENCE ${DATA}/first/${SAMPLE_ID}_1.clean.fq.gz ${DATA}/first/${SAMPLE_ID}_2.clean.fq.gz > ${work_dir}/${SAMPLE_ID}.sam";
+   done
+
 ```
     you need to create a config files for this script, just like below:
     sample1  read1.fq.gz read2.fq.gz
