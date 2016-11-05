@@ -1,7 +1,11 @@
-work_dir=/home/jmzeng/snp-calling
-reference=/home/jmzeng/ref-database/hg19.fasta   
-bwa_dir=$work_dir/resources/apps/bwa-0.7.11
-picard_dir=$work_dir/resources/apps/picard-tools-1.119
+work_dir=/zzh_gpfs02/jixing/NTL/20161104_Exome/snp-calling
+REFERENCE=/zzh_gpfs02/jixing/Annotation/hg19/genome.fa
+BWA=/zzh_gpfs/apps/Bwa/bwa
+DATA=/zzh_gpfs02/jixing/DataBase/bingli_dingyanqing/Exome
+
+picard_dir=
+
+
 for i in *sam
 do
 echo $i
